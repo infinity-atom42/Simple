@@ -1,6 +1,6 @@
 {
 	"name": "@simple-csrf/express",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "A simple to use CSRF package for express apps",
 	"keywords": [
 		"csrf",

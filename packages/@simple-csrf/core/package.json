@@ -1,6 +1,6 @@
 {
 	"name": "@simple-csrf/core",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "CSRF core package used alone or usefull to create other packages",
 	"keywords": [
 		"csrf",
@@ -23,6 +23,9 @@
 	"files": [
 		"dist"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "vite build",
 		"check-types": "tsc --noEmit",
