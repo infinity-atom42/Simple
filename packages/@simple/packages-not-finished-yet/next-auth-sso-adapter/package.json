@@ -1,0 +1,39 @@
+{
+	"name": "@simple/next-auth-sso-adapter",
+	"version": "0.0.0",
+	"description": "An adapter for NextJS apps that implements openId connect protocol for SSO provider",
+	"keywords": [
+		"simple",
+		"auth",
+		"openid",
+		"connect",
+		"SSO",
+		"nextjs",
+		"next",
+		"keycloak",
+		"typescript",
+		"ts"
+	],
+	"license": "MIT",
+	"author": "Infinity Atom",
+	"type": "module",
+	"exports": {
+		"./*": "./src/*.ts"
+	},
+	"scripts": {
+		"build": "tsc",
+		"check-types": "tsc --noEmit",
+		"clean": "rm -rf dist node_modules .turbo",
+		"lint": "eslint . --max-warnings 0",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"jose": "^6.0.10",
+		"next": "^15.2.1",
+		"openid-client": "^6.3.4",
+		"react": "^19.0.0"
+	},
+	"devDependencies": {
+		"@types/react": "19.0.10"
+	}
+}

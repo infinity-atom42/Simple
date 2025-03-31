@@ -1,0 +1,25 @@
+{
+	"name": "@repo/vitest-config",
+	"type": "module",
+	"exports": {
+		"./base": {
+			"types": "./dist/base-config.d.ts",
+			"import": "./dist/base-config.js",
+			"require": "./dist/base-config.cjs"
+		},
+		"./ui": {
+			"types": "./dist/ui-config.d.ts",
+			"import": "./dist/ui-config.js",
+			"require": "./dist/ui-config.cjs"
+		}
+	},
+	"scripts": {
+		"build": "tsc",
+		"check-types": "tsc --noEmit",
+		"clean": "rm -rf node_modules .turbo dist"
+	},
+	"devDependencies": {
+		"@vitest/coverage-istanbul": "^3.1.1",
+		"jsdom": "^26.0.0"
+	}
+}

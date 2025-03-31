@@ -1,3 +1,5 @@
 packages:
-  - "apps/*"
-  - "packages/*"
+  - examples/*
+  - examples/@csrf/*
+  - packages/*
+  - packages/@csrf/*
