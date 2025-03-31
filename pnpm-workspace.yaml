@@ -1,5 +1,5 @@
 packages:
   - examples/*
-  - examples/@csrf/*
+  - examples/@simple-csrf/*
   - packages/*
-  - packages/@csrf/*
+  - packages/@simple-csrf/*

@@ -27,11 +27,11 @@ Thank you for your interest in contributing to our project! This guide will help
 ## Monorepo Structure
 
 - `packages/`: Core packages
-  - `@csrf/`: CSRF protection packages
+  - `@simple-csrf/`: CSRF protection packages
   - `@simple/`: Utility packages
   - Configuration packages (`eslint-config`, `typescript-config`, etc.)
 - `examples/`: Example applications showcasing the packages
-  - `@csrf/`: CSRF examples
+  - `@simple-csrf/`: CSRF examples
   - `@simple/`: Simple examples
 
 ## Development Workflow
@@ -49,7 +49,7 @@ pnpm dev
 pnpm test
 
 # Test specific package
-pnpm --filter @csrf/core test
+pnpm --filter @simple-csrf/core test
 ```
 
 ### Linting and Type Checking

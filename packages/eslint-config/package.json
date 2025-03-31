@@ -1,5 +1,6 @@
 {
 	"name": "@repo/eslint-config",
+	"private": true,
 	"type": "module",
 	"exports": {
 		"./base": "./base.js",
@@ -18,6 +19,6 @@
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-turbo": "^2.4.4",
 		"globals": "^16.0.0",
-		"typescript-eslint": "^8.28.0"
+		"typescript-eslint": "^8.29.0"
 	}
 }

@@ -1,0 +1,15 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["@simple-csrf/next#build"]
+		},
+		"check-types": {
+			"dependsOn": ["@simple-csrf/next#build"]
+		},
+		"dev": {
+			"dependsOn": ["@simple-csrf/next#build"]
+		}
+	}
+}

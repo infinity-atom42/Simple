@@ -1,0 +1,60 @@
+{
+	"name": "@simple-csrf/next",
+	"version": "0.0.0",
+	"description": "A simple to use CSRF package for NextJS apps",
+	"keywords": [
+		"csrf",
+		"tokens",
+		"nextjs",
+		"next",
+		"typescript",
+		"ts"
+	],
+	"license": "MIT",
+	"author": "Infinity Atom",
+	"sideEffects": false,
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./client": {
+			"types": "./dist/client.d.ts",
+			"import": "./dist/client.js",
+			"require": "./dist/client.cjs"
+		},
+		"./provider": {
+			"types": "./dist/provider.d.ts",
+			"import": "./dist/provider.js",
+			"require": "./dist/provider.cjs"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "vite build",
+		"check-types": "tsc --noEmit",
+		"clean": "rm -rf dist node_modules .turbo",
+		"lint": "eslint . --max-warnings 0",
+		"test": "vitest run",
+		"watch": "vite build --watch"
+	},
+	"dependencies": {
+		"@simple-csrf/core": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/react": "19.0.12",
+		"@types/react-dom": "19.0.4",
+		"next": "^15.2.4",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0"
+	},
+	"peerDependencies": {
+		"next": "^15.x",
+		"react": "^19.x",
+		"react-dom": "^19.x"
+	}
+}

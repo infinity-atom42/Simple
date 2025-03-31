@@ -1,0 +1,51 @@
+{
+	"name": "@simple-csrf/express",
+	"version": "0.0.0",
+	"description": "A simple to use CSRF package for express apps",
+	"keywords": [
+		"csrf",
+		"tokens",
+		"express",
+		"typescript",
+		"ts"
+	],
+	"license": "MIT",
+	"author": "Infinity Atom",
+	"sideEffects": false,
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "vite build",
+		"check-types": "tsc --noEmit",
+		"clean": "rm -rf dist node_modules .turbo .next",
+		"lint": "eslint . --max-warnings 0",
+		"test": "vitest run",
+		"watch": "vite build --watch"
+	},
+	"dependencies": {
+		"@simple-csrf/core": "workspace:^"
+	},
+	"devDependencies": {
+		"@types/express": "^5.0.1",
+		"@types/supertest": "^6.0.3",
+		"cookie": "^1.0.2",
+		"express": "^5.1.0",
+		"supertest": "^7.1.0"
+	},
+	"peerDependencies": {
+		"cookie": "^1.x",
+		"express": "^5.x"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

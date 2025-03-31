@@ -1,0 +1,34 @@
+{
+	"name": "@simple-csrf/core",
+	"version": "0.0.0",
+	"description": "CSRF core package used alone or usefull to create other packages",
+	"keywords": [
+		"csrf",
+		"core",
+		"tokens",
+		"typescript",
+		"ts"
+	],
+	"license": "MIT",
+	"author": "Infinity Atom",
+	"sideEffects": false,
+	"type": "module",
+	"exports": {
+		"./*": {
+			"types": "./dist/*.d.ts",
+			"import": "./dist/*.js",
+			"require": "./dist/*.cjs"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "vite build",
+		"check-types": "tsc --noEmit",
+		"clean": "rm -rf node_modules .turbo dist",
+		"lint": "eslint . --max-warnings 0",
+		"test": "vitest run",
+		"watch": "vite build --watch"
+	}
+}

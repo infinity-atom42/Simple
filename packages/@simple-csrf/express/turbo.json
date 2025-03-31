@@ -1,0 +1,15 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["@simple-csrf/core#build"]
+		},
+		"check-types": {
+			"dependsOn": ["@simple-csrf/core#build"]
+		},
+		"test": {
+			"dependsOn": ["@simple-csrf/core#build", "@repo/vitest-config#build"]
+		}
+	}
+}
