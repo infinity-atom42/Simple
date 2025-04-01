@@ -1,5 +1,4 @@
 packages:
-  - examples/*
   - examples/@simple-csrf/*
-  - packages/*
+  - packages/@repo/*
   - packages/@simple-csrf/*
