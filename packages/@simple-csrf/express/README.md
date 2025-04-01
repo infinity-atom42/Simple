@@ -1,12 +1,27 @@
-# Express
+# @simple-csrf/express
 
-This is the documentation for CSRF's Express integration.
+[![npm version](https://img.shields.io/npm/v/@simple-csrf/express.svg)](https://www.npmjs.com/package/@simple-csrf/express)
+[![MIT License](https://img.shields.io/npm/l/@simple-csrf/express.svg)](https://github.com/infinity-atom42/Simple/blob/main/LICENSE)
 
-## Quickstart
+A simple to use CSRF protection package for Express applications. This integration provides middleware that implements the [signed double submit cookie pattern](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#signed-double-submit-cookie-recommended) to protect your Express applications from CSRF attacks.
 
-First, add the integration library as a dependency:
+## Table of Contents
 
-```console
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+  - [createCsrfMiddleware](#createcsrfmiddleware)
+  - [createCsrfProtect](#createcsrfprotect)
+  - [Configuration Options](#configuration-options)
+- [Token Usage](#token-usage)
+- [Examples](#examples)
+- [Compatibility](#compatibility)
+- [Related Packages](#related-packages)
+- [Contributing](#contributing)
+
+## Installation
+
+```bash
 npm install @simple-csrf/express
 # or
 pnpm add @simple-csrf/express
@@ -14,183 +29,263 @@ pnpm add @simple-csrf/express
 yarn add @simple-csrf/express
 ```
 
-Next, add the CSRF middleware to your app:
+Note: This package has peer dependencies on `express` and `cookie`. Make sure they are installed in your project:
+
+```bash
+npm install express cookie
+```
+
+## Quick Start
+
+Here's a basic example of how to use the CSRF middleware in an Express application:
 
 ```javascript
-// app.js
-
+import { createCsrfMiddleware } from '@simple-csrf/express'
 import express from 'express'
 
-import { createCsrfMiddleware } from '@simple-csrf/express'
-
-// initalize csrf protection middleware
+// Initialize CSRF protection middleware
 const csrfMiddleware = createCsrfMiddleware({
   cookie: {
     secure: process.env.NODE_ENV === 'production',
   },
 })
 
-// init app
+// Initialize app
 const app = express()
-const port = 3000
 
-// add csrf middleware
+// Add CSRF middleware
 app.use(csrfMiddleware)
 
-// define handlers
-app.get('/', (_, res) => {
-  res.status(200).json({ success: true })
-})
-
-// start server
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-```
-
-Now, all HTTP submission requests (e.g. POST, PUT, DELETE, PATCH) will be rejected if they do not include a valid CSRF token. To add the CSRF token to your forms, you can fetch it from the `X-CSRF-Token` HTTP response header server-side or client-side. For example:
-
-```javascript
-// app.js
-...
-
-// define handlers
-app.get('/my-form', (req, res) => {
-  const csrfToken = res.getHeader('X-CSRF-Token') || 'missing';
+// Define routes
+app.get('/', (req, res) => {
+  const csrfToken = res.getHeader('X-CSRF-Token') || 'missing'
   res.send(`
     <!doctype html>
     <html>
       <body>
-        <p>CSRF token value: ${csrfToken}</p>
-        <form action="/my-form" method="post">
-          <legend>Form with CSRF (should succeed):</legend>
+        <form action="/form-handler" method="post">
           <input type="hidden" name="csrf_token" value="${csrfToken}" />
           <input type="text" name="input1" />
           <button type="submit">Submit</button>
         </form>
       </body>
     </html>
-  `);
-});
-
-app.post('/my-form', (req, res) => {
-  res.send('success');
-});
-
-...
-```
-
-## Example
-
-Check out the example Express app in this repository: [Express example](examples/express).
-
-## Lower-level implementations
-
-If you want lower-level control over the response or which routes CSRF protection will be applied to you can use the `createCsrfProtect()` method to create a function that you can use inside your own custom middleware:
-
-```typescript
-// app.js
-
-import express from 'express'
-
-import { createCsrfProtect, CsrfError } from '@simple-csrf/express'
-
-// initalize csrf protection method
-const csrfProtect = createCsrfProtect({
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-  },
+  `)
 })
 
-// init app
-const app = express()
-const port = 3000
-
-// add csrf middleware
-app.use(async (req, res, next) => {
-  try {
-    await csrfProtect(req, res)
-  } catch (err) {
-    if (err instanceof CsrfError) {
-      res.statusCode = 403
-      res.send('invalid csrf token')
-      res.end()
-      return
-    }
-    throw err
-  }
+app.post('/form-handler', (req, res) => {
+  res.send('Form submitted successfully!')
 })
 
-// define handlers
-app.get('/', (_, res) => {
-  res.status(200).json({ success: true })
-})
-
-// start server
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+// Start server
+app.listen(3000, () => {
+  console.log('Server running on port 3000')
 })
 ```
 
-## Configuration
+With this setup, all HTTP submission requests (e.g., POST, PUT, DELETE, PATCH) will be rejected if they do not include a valid CSRF token.
+
+## API Reference
+
+### createCsrfMiddleware
+
+Creates an Express middleware function that provides CSRF protection.
 
 ```javascript
-// default config
+import { createCsrfMiddleware } from '@simple-csrf/express'
 
-{
-  cookie: {
-    name: '_csrfSecret',
-    path: '/',
-    maxAge: undefined,
-    domain: '',
-    secure: true,
-    httpOnly: true,
-    sameSite: 'strict',
-    partitioned: undefined
-  },
-  excludePathPrefixes: [],
-  ignoreMethods: ['GET', 'HEAD', 'OPTIONS'],
-  saltByteLength: 8,
-  secretByteLength: 18,
-  token: {
-    fieldName: 'csrf_token',
-    responseHeader: 'X-CSRF-Token'
-  }
+const middleware = createCsrfMiddleware(options)
+app.use(middleware)
+```
+
+**Parameters:**
+
+- `options` (optional): Configuration options for CSRF protection
+
+**Returns:**
+
+- An Express middleware function of type `RequestHandler`
+
+### createCsrfProtect
+
+Creates a lower-level CSRF protection function that can be used for more custom integrations.
+
+```javascript
+import { createCsrfProtect } from '@simple-csrf/express'
+
+const protect = createCsrfProtect(options)
+```
+
+**Parameters:**
+
+- `options` (optional): Configuration options for CSRF protection
+
+**Returns:**
+
+- A function of type `ExpressCsrfProtect` that can be called to validate requests and generate tokens
+
+### Configuration Options
+
+The configuration object can include the following properties:
+
+```typescript
+interface ExpressConfigOptions {
+  // Prefixes of paths that should be excluded from CSRF protection
+  excludePathPrefixes?: string[]
+
+  // HTTP methods to ignore (default: ['GET', 'HEAD', 'OPTIONS'])
+  ignoreMethods?: string[]
+
+  // Length of the salt in bytes (default: 8)
+  saltByteLength?: number
+
+  // Length of the secret in bytes (default: 18)
+  secretByteLength?: number
+
+  // Cookie configuration
+  cookie?: Partial<{
+    // Domain for the cookie (default: '')
+    domain: string
+
+    // Whether the cookie is HTTP only (default: true)
+    httpOnly: boolean
+
+    // Max age of the cookie in seconds (default: undefined)
+    maxAge: number | undefined
+
+    // Name of the cookie (default: '_csrfSecret')
+    name: string
+
+    // Whether the cookie is partitioned (default: undefined)
+    partitioned: boolean | undefined
+
+    // Path for the cookie (default: '/')
+    path: string
+
+    // SameSite attribute (default: 'strict')
+    sameSite: boolean | 'none' | 'strict' | 'lax'
+
+    // Whether the cookie requires HTTPS (default: true)
+    secure: boolean
+  }>
+
+  // Token configuration
+  token?: Partial<{
+    // Name of the field for the token (default: 'csrf_token')
+    fieldName: string
+
+    // Custom function to retrieve token value from request
+    value: (request: Request) => Promise<string>
+
+    // The name of the response header containing the CSRF token (default: 'X-CSRF-Token')
+    responseHeader: string
+  }>
 }
 ```
 
-## API
+## Token Usage
 
-The following are named exports in the the `@simple-csrf/express` module:
+When a request is processed by the middleware:
 
-### Types
+1. The server generates a CSRF token and sets it in the response header (default: `X-CSRF-Token`)
+2. The token must be included in subsequent requests that modify state (POST, PUT, DELETE, etc.)
 
+The middleware will look for the token in the following places (in order):
+
+1. Custom token value function (if provided)
+2. `X-CSRF-Token` header
+3. Form data field with the configured name (default: `csrf_token`)
+4. JSON request body field with the configured name
+5. Raw request body text
+
+### Including the Token in Forms
+
+```html
+<form
+  method="post"
+  action="/submit">
+  <input
+    type="hidden"
+    name="csrf_token"
+    value="TOKEN_VALUE_HERE" />
+  <!-- other form fields -->
+  <button type="submit">Submit</button>
+</form>
 ```
-ExpressCsrfProtect - A function that implements CSRF protection for Express requests
 
-  * @param {Request} request - The Express request instance
-  * @param {Response} response - The Express response instance
-  * @returns {Promise<void>} - The function completed successfully
-  * @throws {CsrfError} - The function encountered a CSRF error
+### Including the Token in AJAX Requests
+
+```javascript
+// Using fetch
+fetch('/api/data', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': 'TOKEN_VALUE_HERE',
+  },
+  body: JSON.stringify({ data: 'example' }),
+})
+
+// Using axios
+axios.post('/api/data', { data: 'example' }, { headers: { 'X-CSRF-Token': 'TOKEN_VALUE_HERE' } })
 ```
 
-### Classes
+## Examples
 
+### Excluding Specific Routes
+
+You can exclude specific routes from CSRF protection:
+
+```javascript
+const csrfMiddleware = createCsrfMiddleware({
+  excludePathPrefixes: ['/api/webhook/', '/public/'],
+})
 ```
-CsrfError - A class that inherits from Error and represents CSRF errors
+
+### Custom Error Handling
+
+For custom error handling, you can use the lower-level `createCsrfProtect` function:
+
+```javascript
+import { createCsrfProtect, CsrfError } from '@simple-csrf/express'
+
+const csrfProtect = createCsrfProtect()
+
+app.use(async (req, res, next) => {
+  try {
+    await csrfProtect(req, res)
+    next()
+  } catch (error) {
+    if (error instanceof CsrfError) {
+      res.status(403).json({ error: 'Invalid CSRF token' })
+    } else {
+      next(error)
+    }
+  }
+})
 ```
 
-### Methods
+### Complete Application Example
 
-```
-createCsrfMiddleware([, options]) - Create a new instance of Express middleware
+A complete example application is available in the [examples directory](https://github.com/infinity-atom42/Simple/tree/main/examples/%40simple-csrf/express).
 
-  * @param {object} options - The configuration options
-  * @returns {ReqestHandler} - The middleware
+## Compatibility
 
-createCsrfProtect([, options]) - Create a lower-level function that can be used inside Express middleware
-                                 to implement CSRF protection for requests
+This package requires:
 
-  * @param {object} options - The configuration options
-  * @returns {ExpressCsrfProtect} - The CSRF protection function
-```
+- **Express**: Version 5.x
+- **Cookie**: Version 1.x
+- **Node.js**: Developed and tested with Node.js 22.x
+
+## Related Packages
+
+The following packages are part of the @simple-csrf ecosystem:
+
+| Package               | Description                                                | GitHub                                                                                     | npm                                                    |
+| --------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| **@simple-csrf/core** | Core implementation with utilities for custom integrations | [GitHub](https://github.com/infinity-atom42/Simple/tree/main/packages/%40simple-csrf/core) | [npm](https://www.npmjs.com/package/@simple-csrf/core) |
+| **@simple-csrf/next** | Next.js integration for CSRF protection                    | [GitHub](https://github.com/infinity-atom42/Simple/tree/main/packages/%40simple-csrf/next) | [npm](https://www.npmjs.com/package/@simple-csrf/next) |
+
+## Contributing
+
+We welcome contributions and bug reports! Please open an issue or pull request on our [GitHub repository](https://github.com/infinity-atom42/Simple).

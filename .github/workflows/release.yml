@@ -7,6 +7,11 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+# Add permissions for the GITHUB_TOKEN
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release:
     name: Release

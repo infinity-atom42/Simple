@@ -1,14 +1,25 @@
 {
 	"name": "@simple-csrf/express",
-	"version": "0.1.0",
-	"description": "A simple to use CSRF package for express apps",
+	"version": "0.1.1",
+	"description": "CSRF protection middleware for Express applications",
 	"keywords": [
 		"csrf",
 		"tokens",
 		"express",
+		"middleware",
+		"security",
 		"typescript",
 		"ts"
 	],
+	"homepage": "https://github.com/infinity-atom42/Simple/tree/main/packages/%40simple-csrf/express#readme",
+	"bugs": {
+		"url": "https://github.com/infinity-atom42/Simple/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/infinity-atom42/Simple",
+		"directory": "packages/@simple-csrf/express"
+	},
 	"license": "MIT",
 	"author": "Infinity Atom",
 	"sideEffects": false,

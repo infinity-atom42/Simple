@@ -1,15 +1,26 @@
 {
 	"name": "@simple-csrf/next",
-	"version": "0.1.0",
-	"description": "A simple to use CSRF package for NextJS apps",
+	"version": "0.1.1",
+	"description": "CSRF protection middleware and components for Next.js applications",
 	"keywords": [
 		"csrf",
 		"tokens",
 		"nextjs",
 		"next",
 		"typescript",
-		"ts"
+		"ts",
+		"security",
+		"middleware"
 	],
+	"homepage": "https://github.com/infinity-atom42/Simple/tree/main/packages/%40simple-csrf/next#readme",
+	"bugs": {
+		"url": "https://github.com/infinity-atom42/Simple/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/infinity-atom42/Simple",
+		"directory": "packages/@simple-csrf/next"
+	},
 	"license": "MIT",
 	"author": "Infinity Atom",
 	"sideEffects": false,
@@ -34,9 +45,6 @@
 	"files": [
 		"dist"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"scripts": {
 		"build": "vite build",
 		"check-types": "tsc --noEmit",
@@ -59,5 +67,8 @@
 		"next": "^15.x",
 		"react": "^19.x",
 		"react-dom": "^19.x"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }

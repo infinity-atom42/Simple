@@ -6,16 +6,16 @@
 	"type": "module",
 	"scripts": {
 		"build": "turbo build",
+		"changeset": "changeset",
 		"check-types": "turbo check-types",
 		"clean:all": "turbo clean && rm -rf node_modules .turbo pnpm-lock.yaml",
 		"dev": "turbo dev",
 		"format": "prettier --check .",
 		"format:write": "prettier --write .",
 		"lint": "turbo lint",
+		"release": "changeset publish",
 		"test": "turbo test",
-		"changeset": "changeset",
-		"version": "changeset version",
-		"release": "changeset publish"
+		"version": "changeset version"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.28.1",

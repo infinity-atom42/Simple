@@ -14,10 +14,19 @@ export default defineConfig({
 		},
 		outDir: 'dist',
 		sourcemap: process.env.NODE_ENV !== 'production',
+		target: 'esnext',
+		rollupOptions: {
+			output: {
+				preserveModules: true,
+				compact: true,
+				banner: '/**\n * Generated CSRF Core package\n * @license MIT\n */',
+			},
+		},
 	},
 	plugins: [
 		dts({
 			insertTypesEntry: true,
+			rollupTypes: true,
 		}),
 	],
 })

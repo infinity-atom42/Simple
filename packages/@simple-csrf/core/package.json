@@ -1,7 +1,7 @@
 {
 	"name": "@simple-csrf/core",
-	"version": "0.1.0",
-	"description": "CSRF core package used alone or usefull to create other packages",
+	"version": "0.1.1",
+	"description": "CSRF core package used alone or useful to create other packages",
 	"keywords": [
 		"csrf",
 		"core",
@@ -9,6 +9,15 @@
 		"typescript",
 		"ts"
 	],
+	"homepage": "https://github.com/infinity-atom42/Simple/tree/main/packages/%40simple-csrf/core#readme",
+	"bugs": {
+		"url": "https://github.com/infinity-atom42/Simple/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/infinity-atom42/Simple",
+		"directory": "packages/@simple-csrf/core"
+	},
 	"license": "MIT",
 	"author": "Infinity Atom",
 	"sideEffects": false,
@@ -23,9 +32,6 @@
 	"files": [
 		"dist"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"scripts": {
 		"build": "vite build",
 		"check-types": "tsc --noEmit",
@@ -33,5 +39,8 @@
 		"lint": "eslint . --max-warnings 0",
 		"test": "vitest run",
 		"watch": "vite build --watch"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
