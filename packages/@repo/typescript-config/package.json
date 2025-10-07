@@ -2,6 +2,6 @@
 	"name": "@repo/typescript-config",
 	"private": true,
 	"scripts": {
-		"clean": "rm -rf node_modules"
+		"clean": "rm -rf node_modules .turbo"
 	}
 }

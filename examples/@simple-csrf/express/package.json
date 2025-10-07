@@ -3,7 +3,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"clean": "rm -rf node_modules"
+		"clean": "rm -rf node_modules .turbo"
 	},
 	"dependencies": {
 		"@simple-csrf/express": "workspace:*",

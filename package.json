@@ -8,7 +8,7 @@
 		"build": "turbo build",
 		"changeset": "changeset",
 		"check-types": "turbo check-types",
-		"clean:all": "turbo clean && rm -rf node_modules .turbo pnpm-lock.yaml",
+		"clean": "turbo clean && rm -rf node_modules .turbo pnpm-lock.yaml",
 		"dev": "turbo dev",
 		"format": "prettier --check .",
 		"format:write": "prettier --write .",
