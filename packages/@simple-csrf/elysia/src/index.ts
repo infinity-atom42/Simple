@@ -111,8 +111,3 @@ export function csrf(opts?: Partial<ElysiaConfigOptions>) {
 			}
 		})
 }
-
-/**
- * Default export for convenience
- */
-export default csrf

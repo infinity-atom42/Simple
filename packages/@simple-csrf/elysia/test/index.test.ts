@@ -1,15 +1,6 @@
-import { Elysia } from 'elysia'
 import { describe, expect, it } from 'vitest'
 
-import * as util from '@simple-csrf/core/util'
-import { csrf, ElysiaConfig, ElysiaTokenOptions } from '../src/index'
-
-function createApp() {
-	return new Elysia()
-		.use(csrf())
-		.get('/', () => ({ success: true }))
-		.post('/', () => ({ success: true }))
-}
+import { ElysiaTokenOptions } from '../src/index'
 
 describe('ElysiaTokenOptions tests', () => {
 	it('returns default values when options are absent', () => {
